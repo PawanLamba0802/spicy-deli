@@ -14,9 +14,22 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::middleware('auth:api')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
-
+//User Routes
 Route::post('register', 'UserController@register');
 Route::post('login', 'UserController@login');
+
+//Route::apiResource('products', 'ProductController');
+
+//GET
+Route::get('products', 'ProductController@index');
+Route::get('products/{id}', 'ProductController@show');
+
+Route::get('categories', 'CategoryController@index');
+Route::get('categories/{id}', 'CategoryController@show');
+
+//POST, UPDATE and DELETE
+Route::group(['middleware' => 'auth:api'], function(){
+    Route::post('products', 'ProductController@store');
+    Route::put('products/{id}', 'ProductController@update');
+    Route::delete('products/{id}', 'ProductController@destroy');
+});
